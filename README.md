@@ -1,6 +1,14 @@
 # Bom e Fit · Comanda Digital
 
-Aplicação acadêmica de comanda digital para dark kitchen, guiada pelo SRS Comanda Digital v3.2. O repositório contém o frontend Angular, API Spring Boot e persistência MySQL. A versão anterior do Bom e Fit (`darkkitchen`) é um projeto separado e não foi alterada.
+Aplicação acadêmica de comanda digital para dark kitchen, guiada pelo SRS Comanda Digital v3.2. O repositório contém o frontend Angular, API Spring Boot e persistência MySQL.
+
+## URLs do Sistema em Produção (Deploy em Nuvem)
+
+- **API REST (Render):** `https://comanda-digital-plko.onrender.com/api`
+- **Health Check:** `https://comanda-digital-plko.onrender.com/api/health`
+- **Swagger / OpenAPI:** `https://comanda-digital-plko.onrender.com/swagger-ui.html`
+- **Banco de Dados (Railway):** MySQL 8.4 gerenciado com migrations Flyway (V1, V2, V3)
+- **Frontend (Cloudflare Pages):** `https://comanda-digital.pages.dev`
 
 ## Stack
 

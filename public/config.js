@@ -1,2 +1,2 @@
-// Altere este endereço para a API pública quando o frontend for implantado.
-globalThis.__BOMEFIT_API_URL__ = 'http://localhost:8080/api';
+// Endereço da API pública de produção no Render
+globalThis.__BOMEFIT_API_URL__ = 'https://comanda-digital-plko.onrender.com/api';
