@@ -41,7 +41,7 @@ services:
   frontend:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: deploy/Dockerfile.frontend
     restart: unless-stopped
     environment:
       API_URL: ${API_PUBLIC_URL:-http://localhost:8080/api}
