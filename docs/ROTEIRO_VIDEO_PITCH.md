@@ -78,7 +78,7 @@
   3. Plataformas de nuvem usadas para deploy gratuito (ex: Render/Railway para backend Java + MySQL gerenciado, e Vercel/Netlify para frontend Angular).
   4. Encerramento: destacar o link do Swagger (`/swagger-ui.html`) e o README completo.
 * **Fala sugerida:**
-  > "Para produção, o sistema está preparado para containers com Docker Compose e Nginx, além de deploy direto em plataformas como Render e Vercel com MySQL gerenciado. Nenhuma credencial ou segredo fica hardcoded no repositório. O Swagger está ativo em `/swagger-ui.html` para testes da API. Com isso, entregamos uma solução completa, robusta e aderente a 100% dos requisitos do SRS. Obrigado!"
+  > "Para produção, o sistema está publicado e ativo em nuvem com alta disponibilidade: frontend Angular no Cloudflare Pages (comanda-digital-b0u.pages.dev), API REST no Render (comanda-digital-plko.onrender.com) e banco de dados MySQL gerenciado no Railway com migrations automáticas via Flyway. Nenhuma credencial ou segredo fica hardcoded no repositório. O Swagger está ativo em `/swagger-ui.html` para testes da API. Com isso, entregamos uma solução completa, robusta e aderente a 100% dos requisitos do SRS v3.2. Obrigado!"
 
 ---
 

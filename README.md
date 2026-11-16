@@ -8,7 +8,7 @@ Aplicação acadêmica de comanda digital para dark kitchen, guiada pelo SRS Com
 - **Health Check:** `https://comanda-digital-plko.onrender.com/api/health`
 - **Swagger / OpenAPI:** `https://comanda-digital-plko.onrender.com/swagger-ui.html`
 - **Banco de Dados (Railway):** MySQL 8.4 gerenciado com migrations Flyway (V1, V2, V3)
-- **Frontend (Cloudflare Pages):** `https://comanda-digital.pages.dev`
+- **Frontend (Cloudflare Pages):** `https://comanda-digital-b0u.pages.dev`
 
 ## Stack
 
