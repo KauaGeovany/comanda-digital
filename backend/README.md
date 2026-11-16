@@ -1,6 +1,6 @@
 # Backend · Bom e Fit Comanda Digital
 
-API REST em Java 17 / Spring Boot 3.5. MySQL 8.4, Flyway (`V1` schema, `V2` seed), Spring Security stateless com JWT, regras por perfil, DTOs, validação e erros centralizados.
+API REST em Java 17 / Spring Boot 3.5. MySQL 8.4, Flyway (`V1`, `V2`, `V3`), Spring Security stateless com JWT, regras por perfil, DTOs, validação e erros centralizados.
 
 ## Executar localmente
 
