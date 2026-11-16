@@ -1,0 +1,123 @@
+erDiagram
+    USUARIO ||--o{ PEDIDO_COMPRA : registra
+    USUARIO ||--o{ PEDIDO_STATUS_HISTORICO : altera
+    USUARIO ||--o{ ESTOQUE_MOVIMENTACAO : registra
+    CATEGORIA ||--o{ PRATO : organiza
+    PRATO ||--o| FICHA_TECNICA : possui
+    FICHA_TECNICA ||--o{ FICHA_TECNICA_ITEM : contem
+    INGREDIENTE ||--o{ FICHA_TECNICA_ITEM : compoe
+    FORNECEDOR ||--o{ FORNECEDOR_PRODUTO : oferece
+    INGREDIENTE ||--o{ FORNECEDOR_PRODUTO : catalogado
+    FORNECEDOR ||--o{ HISTORICO_PRECO_FORNECEDOR : precifica
+    INGREDIENTE ||--o{ HISTORICO_PRECO_FORNECEDOR : acompanha
+    FORNECEDOR ||--o{ PEDIDO_COMPRA : recebe
+    PEDIDO_COMPRA ||--|{ PEDIDO_COMPRA_ITEM : inclui
+    INGREDIENTE ||--o{ PEDIDO_COMPRA_ITEM : solicitado
+    USUARIO ||--o{ PEDIDO : cliente
+    PEDIDO ||--|{ PEDIDO_ITEM : contem
+    PRATO ||--o{ PEDIDO_ITEM : vendido
+    PEDIDO ||--o{ PEDIDO_STATUS_HISTORICO : possui
+    PEDIDO_COMPRA o|--o{ ESTOQUE_MOVIMENTACAO : referencia_compra
+    PEDIDO o|--o{ ESTOQUE_MOVIMENTACAO : referencia_pedido
+    INGREDIENTE ||--o{ ESTOQUE_MOVIMENTACAO : movimenta
+
+    USUARIO {
+        bigint id PK
+        varchar email UK
+        varchar perfil
+        varchar status
+    }
+    CATEGORIA {
+        bigint id PK
+        varchar nome UK
+        int ordem
+        varchar status
+    }
+    PRATO {
+        bigint id PK
+        bigint categoria_id FK
+        decimal preco_venda
+        varchar status
+    }
+    FICHA_TECNICA {
+        bigint id PK
+        bigint prato_id FK_UK
+        int rendimento
+    }
+    FICHA_TECNICA_ITEM {
+        bigint id PK
+        bigint ficha_tecnica_id FK
+        bigint ingrediente_id FK
+        decimal quantidade
+        decimal fator_correcao
+    }
+    INGREDIENTE {
+        bigint id PK
+        varchar sku UK
+        varchar unidade_padrao
+        decimal estoque_minimo
+        decimal custo_unitario
+    }
+    FORNECEDOR {
+        bigint id PK
+        varchar cnpj UK
+        varchar razao_social
+        varchar status
+    }
+    FORNECEDOR_PRODUTO {
+        bigint id PK
+        bigint fornecedor_id FK
+        bigint ingrediente_id FK
+        decimal preco
+    }
+    HISTORICO_PRECO_FORNECEDOR {
+        bigint id PK
+        bigint fornecedor_id FK
+        bigint ingrediente_id FK
+        decimal preco
+        timestamp registrado_em
+    }
+    PEDIDO_COMPRA {
+        bigint id PK
+        bigint fornecedor_id FK
+        bigint usuario_id FK
+        varchar status
+        decimal valor_total
+    }
+    PEDIDO_COMPRA_ITEM {
+        bigint id PK
+        bigint pedido_compra_id FK
+        bigint ingrediente_id FK
+        decimal quantidade
+        decimal preco_unitario
+    }
+    PEDIDO {
+        bigint id PK
+        bigint cliente_id FK
+        varchar status
+        decimal valor_total
+        varchar canal
+    }
+    PEDIDO_ITEM {
+        bigint id PK
+        bigint pedido_id FK
+        bigint prato_id FK
+        int quantidade
+        decimal preco_unitario
+    }
+    PEDIDO_STATUS_HISTORICO {
+        bigint id PK
+        bigint pedido_id FK
+        bigint usuario_id FK
+        varchar status
+        timestamp created_at
+    }
+    ESTOQUE_MOVIMENTACAO {
+        bigint id PK
+        bigint ingrediente_id FK
+        bigint pedido_compra_id FK
+        bigint pedido_id FK
+        bigint usuario_id FK
+        varchar tipo
+        decimal quantidade
+    }

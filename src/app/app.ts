@@ -1,12 +1,10 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { AuthService, CartService } from './core';
+import { FeedbackService } from './feedback';
 
-@Component({
-  selector: 'app-root',
-  imports: [RouterOutlet],
-  templateUrl: './app.html',
-  styleUrl: './app.css'
-})
+@Component({ selector:'app-root', standalone:true, imports:[RouterOutlet,RouterLink,RouterLinkActive], templateUrl:'./app.html', styleUrl:'./app.css' })
 export class App {
-  protected readonly title = signal('bomefit');
+  auth = inject(AuthService); cart = inject(CartService); router = inject(Router); feedback = inject(FeedbackService);
+  sair(): void { this.auth.signOut(); void this.router.navigate(['/']); }
 }
