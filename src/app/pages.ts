@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
 import { CurrencyPipe, DatePipe, DecimalPipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { FormArray, FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -16,10 +16,10 @@ import { FeedbackService } from './feedback';
 </section>@if(pratoDetalhe){<div class="modal-backdrop" (click)="pratoDetalhe=null"><section class="detail-modal" role="dialog" aria-modal="true" [attr.aria-label]="'Detalhes de '+pratoDetalhe.nome" (click)="$event.stopPropagation()"><button class="modal-close" aria-label="Fechar" (click)="pratoDetalhe=null">×</button>@if(pratoDetalhe.fotoUrl){<img class="detail-photo" [src]="pratoDetalhe.fotoUrl" [alt]="pratoDetalhe.nome"/>}<span class="eyebrow">{{pratoDetalhe.categoria}}</span><h2>{{pratoDetalhe.nome}}</h2><p>{{pratoDetalhe.descricao}}</p><div class="detail-meta"><span>◷ {{pratoDetalhe.tempoPreparoMin}} min</span><strong>{{pratoDetalhe.precoVenda|currency:'BRL'}}</strong></div><button class="button primary full" (click)="adicionar(pratoDetalhe);pratoDetalhe=null">Adicionar ao carrinho</button></section></div>}<div class="callout"><span>🥬</span><div><b>Comer bem pode ser simples.</b><p>Ingredientes de qualidade, receitas equilibradas e sabor em cada detalhe.</p></div><span class="callout-heart">♥</span></div>
 `})
 export class HomePage implements OnInit {
-  private http=inject(HttpClient); cart=inject(CartService); router=inject(Router); auth=inject(AuthService);feedback=inject(FeedbackService);
+  private http=inject(HttpClient); private cdr=inject(ChangeDetectorRef); cart=inject(CartService); router=inject(Router); auth=inject(AuthService);feedback=inject(FeedbackService);
   pratos:Prato[]=[]; categorias:{id:number;nome:string}[]=[]; categoria:number|null=null; pagina=0;totalPaginas=0;carregando=true; erro=''; pratoDetalhe:Prato|null=null;
-  ngOnInit(){this.http.get<{id:number;nome:string}[]>(`${API_URL}/cardapio/categorias`).subscribe({next:v=>this.categorias=v,error:()=>{}});this.carregar();}
-  carregar(){this.carregando=true;this.erro='';const params:Record<string,string|number>={page:this.pagina,size:12};if(this.categoria)params['categoriaId']=this.categoria;this.http.get<Pagina<Prato>>(`${API_URL}/cardapio`,{params}).subscribe({next:r=>{this.pratos=r.content;this.totalPaginas=r.totalPages;this.carregando=false;},error:()=>{this.pratos=[];this.carregando=false;this.erro='Não foi possível conectar ao cardápio. Confirme se a API está em execução.';}});}
+  ngOnInit(){this.http.get<{id:number;nome:string}[]>(`${API_URL}/cardapio/categorias`).subscribe({next:v=>{this.categorias=v;this.cdr.markForCheck();},error:()=>{}});this.carregar();}
+  carregar(){this.carregando=true;this.erro='';const params:Record<string,string|number>={page:this.pagina,size:12};if(this.categoria)params['categoriaId']=this.categoria;this.http.get<Pagina<Prato>>(`${API_URL}/cardapio`,{params}).subscribe({next:r=>{this.pratos=r.content;this.totalPaginas=r.totalPages;this.carregando=false;this.cdr.markForCheck();},error:()=>{this.pratos=[];this.carregando=false;this.erro='Não foi possível conectar ao cardápio. Confirme se a API está em execução.';this.cdr.markForCheck();}});}
   filtrar(id:number|null){this.categoria=id;this.pagina=0;this.carregar();}
   mudarPagina(delta:number){this.pagina=Math.max(0,Math.min(this.totalPaginas-1,this.pagina+delta));this.carregar();}
   adicionar(p:Prato){this.cart.add(p);this.feedback.success(`${p.nome} adicionado à sacola.`);}
