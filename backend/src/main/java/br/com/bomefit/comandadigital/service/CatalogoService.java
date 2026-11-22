@@ -40,8 +40,8 @@ public class CatalogoService {
     @Transactional(readOnly = true)
     public Page<PratoResumoResponse> cardapio(Long categoriaId, Pageable pageable) {
         Page<Prato> pratos = categoriaId == null
-            ? pratoRepository.findAllByStatus(StatusPrato.ATIVO, pageable)
-            : pratoRepository.findAllByCategoria_IdAndStatus(categoriaId, StatusPrato.ATIVO, pageable);
+            ? pratoRepository.findAllByStatusAndCategoria_Status(StatusPrato.ATIVO, StatusRegistro.ATIVO, pageable)
+            : pratoRepository.findAllByCategoria_IdAndStatusAndCategoria_Status(categoriaId, StatusPrato.ATIVO, StatusRegistro.ATIVO, pageable);
         return pratos.map(this::pratoResponse);
     }
 
@@ -79,6 +79,9 @@ public class CatalogoService {
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Categoria não encontrada."));
         categoria.setStatus(StatusRegistro.INATIVO);
         categoriaRepository.save(categoria);
+        List<Prato> pratosAtivos = pratoRepository.findAllByCategoria_IdAndStatus(id, StatusPrato.ATIVO);
+        pratosAtivos.forEach(prato -> prato.setStatus(StatusPrato.INATIVO));
+        pratoRepository.saveAll(pratosAtivos);
     }
 
     @Transactional(readOnly = true)
