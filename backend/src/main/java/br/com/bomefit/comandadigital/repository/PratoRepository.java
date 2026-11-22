@@ -12,5 +12,8 @@ public interface PratoRepository extends JpaRepository<Prato, Long> {
     Optional<Prato> findByIdAndStatus(Long id, StatusPrato status);
     Page<Prato> findAllByStatus(StatusPrato status, Pageable pageable);
     Page<Prato> findAllByCategoria_IdAndStatus(Long categoriaId, StatusPrato status, Pageable pageable);
+    Page<Prato> findAllByStatusAndCategoria_Status(StatusPrato status, StatusRegistro categoriaStatus, Pageable pageable);
+    Page<Prato> findAllByCategoria_IdAndStatusAndCategoria_Status(Long categoriaId, StatusPrato status, StatusRegistro categoriaStatus, Pageable pageable);
+    List<Prato> findAllByCategoria_IdAndStatus(Long categoriaId, StatusPrato status);
 }
 
